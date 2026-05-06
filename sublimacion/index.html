@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innovación Educativa: Sublimación — Planeación</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --magenta: #e91e8c;
+  --magenta-dim: #a8136a;
+  --magenta-glow: rgba(233,30,140,0.15);
+  --cyan: #00c8e0;
+  --cyan-dim: #008fa0;
+  --yellow: #ffe033;
+  --yellow-dim: #c8a800;
+  --black-ink: #1a1a2a;
+  --green: #00e676;
+  --green-dim: #00a854;
+  --bg0: #08060f;
+  --bg1: #100d1a;
+  --bg2: #181426;
+  --bg3: #201c30;
+  --border: rgba(233,30,140,0.15);
+  --border-strong: rgba(233,30,140,0.4);
+  --text: #e8d8f8;
+  --text-dim: #6a5a8a;
+  --sans: 'Exo 2', sans-serif;
+  --head: 'Rajdhani', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--bg0);
+  color:var(--text);
+  font-family:var(--sans);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* CMYK dot pattern */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    radial-gradient(circle, rgba(233,30,140,0.06) 1px, transparent 1px),
+    radial-gradient(circle, rgba(0,200,224,0.04) 1px, transparent 1px);
+  background-size:30px 30px, 45px 45px;
+  background-position:0 0, 15px 15px;
+  pointer-events:none;z-index:0;
+}
+
+/* Heat wave lines */
+body::after{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    -45deg,
+    transparent,transparent 8px,
+    rgba(233,30,140,0.015) 8px,rgba(233,30,140,0.015) 9px
+  );
+  pointer-events:none;z-index:0;
+}
+
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 1rem 3rem}
+
+/* ===== HEADER ===== */
+header{
+  background:linear-gradient(135deg,#140820 0%,#080610 60%,#1a0820 100%);
+  border-bottom:2px solid var(--magenta-dim);
+  padding:0 1rem;
+  position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 24px rgba(233,30,140,0.25);
+}
+
+.header-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;flex-wrap:wrap;
+}
+
+.logo-icon{
+  width:48px;height:48px;
+  border:1.5px solid var(--magenta);
+  border-radius:6px;background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  box-shadow:0 0 14px var(--magenta-glow), inset 0 0 8px rgba(233,30,140,0.05);
+  position:relative;overflow:hidden;
+}
+
+/* Heat shimmer on logo */
+.logo-icon::after{
+  content:'';position:absolute;
+  width:200%;height:4px;
+  background:linear-gradient(90deg,transparent,rgba(255,224,51,0.4),transparent);
+  top:30%;animation:heat 2s ease-in-out infinite;
+}
+@keyframes heat{0%{left:-100%}100%{left:100%}}
+
+.logo-icon svg{width:28px;height:28px;position:relative;z-index:1;}
+
+.header-text h1{
+  font-family:var(--head);
+  font-size:clamp(11px,2vw,15px);
+  color:var(--magenta);
+  letter-spacing:2px;font-weight:700;
+  text-shadow:0 0 10px rgba(233,30,140,0.5);
+}
+.header-text p{font-size:11px;color:var(--text-dim);margin-top:3px;}
+
+.header-badge{
+  margin-left:auto;
+  background:var(--bg3);border:1px solid var(--border-strong);
+  color:var(--magenta);font-family:var(--head);
+  font-size:11px;padding:5px 14px;border-radius:4px;
+  letter-spacing:1px;white-space:nowrap;
+  box-shadow:0 0 8px var(--magenta-glow);
+}
+
+/* ===== CMYK COLOR STRIP ===== */
+.cmyk-strip{
+  display:flex;height:4px;
+}
+.cmyk-strip span{flex:1;}
+.cmyk-c{background:#00c8e0;}
+.cmyk-m{background:#e91e8c;}
+.cmyk-y{background:#ffe033;}
+.cmyk-k{background:#1a1a2a;}
+
+/* ===== INFO STRIP ===== */
+.info-strip{background:var(--bg1);border-bottom:1px solid var(--border);padding:8px 1rem;}
+.info-strip-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;}
+.info-label{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;}
+.info-val{font-size:11px;color:var(--text);margin-top:2px;}
+
+/* ===== PROGRESS ===== */
+.progress-section{background:var(--bg1);border-bottom:1px solid var(--border);padding:12px 1rem;}
+.progress-inner{max-width:1100px;margin:0 auto;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:4px;}
+.progress-label{font-family:var(--head);font-size:12px;color:var(--text-dim);letter-spacing:1px;}
+.progress-nums{font-family:var(--head);font-size:12px;color:var(--magenta);}
+
+.progress-track{height:10px;background:var(--bg3);border-radius:5px;overflow:hidden;border:1px solid var(--border);position:relative;}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--cyan-dim),var(--magenta),var(--yellow-dim));
+  border-radius:5px;transition:width 0.6s ease;
+  box-shadow:0 0 10px var(--magenta-glow);
+}
+
+/* ===== TABS ===== */
+.tabs-wrap{border-bottom:1px solid var(--border);}
+.tabs-inner{max-width:1100px;margin:0 auto;padding:0 1rem;}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{
+  padding:12px 20px;font-family:var(--head);font-size:12px;
+  color:var(--text-dim);cursor:pointer;letter-spacing:1px;white-space:nowrap;
+  border-bottom:2px solid transparent;border-top:none;border-left:none;border-right:none;
+  background:none;transition:color 0.2s,border-color 0.2s;
+}
+.tab:hover{color:var(--magenta);}
+.tab.active{color:var(--magenta);border-bottom-color:var(--magenta);text-shadow:0 0 8px rgba(233,30,140,0.4);}
+
+/* ===== CONTENT ===== */
+.content{padding:1.5rem 0;}
+.view{display:none;}
+.view.active{display:block;}
+
+/* ===== PRODUCT CARDS (semanas) ===== */
+.semanas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+
+.semana-card{
+  background:var(--bg1);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;
+  transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;
+}
+.semana-card:hover{border-color:var(--border-strong);transform:translateY(-2px);box-shadow:0 6px 20px rgba(233,30,140,0.1);}
+.semana-card.done{border-color:rgba(0,230,118,0.4);background:#010f06;}
+.semana-card.pending{border-color:var(--border);}
+.semana-card.proyecto{border-color:rgba(255,224,51,0.3);background:#0f0e01;}
+
+.card-header{
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:10px;
+}
+
+/* Product icon strip at top of each card */
+.card-accent{height:3px;background:linear-gradient(90deg,var(--cyan),var(--magenta),var(--yellow));}
+.semana-card.done .card-accent{background:linear-gradient(90deg,var(--green),var(--green-dim));}
+.semana-card.proyecto .card-accent{background:linear-gradient(90deg,var(--yellow-dim),var(--yellow));}
+
+.card-num{
+  width:28px;height:28px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--head);font-size:11px;font-weight:700;
+  flex-shrink:0;margin-top:1px;
+  background:var(--bg3);color:var(--text-dim);border:1px solid var(--border);
+}
+.semana-card.done .card-num{background:rgba(0,230,118,0.1);color:var(--green);border-color:rgba(0,230,118,0.3);}
+.semana-card.proyecto .card-num{background:rgba(255,224,51,0.1);color:var(--yellow);border-color:rgba(255,224,51,0.3);}
+
+.card-title{flex:1;font-size:12px;font-weight:600;color:var(--text);line-height:1.4;}
+.semana-card.done .card-title{color:var(--green);}
+.semana-card.proyecto .card-title{color:var(--yellow);}
+
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.semana-card.done .status-dot{background:var(--green);box-shadow:0 0 6px var(--green);}
+.semana-card.pending .status-dot{background:var(--border-strong);}
+.semana-card.proyecto .status-dot{background:var(--yellow);box-shadow:0 0 6px rgba(255,224,51,0.4);}
+
+.card-body{padding:12px 14px;}
+.card-comp{font-size:10px;color:var(--magenta);margin-bottom:8px;display:flex;align-items:center;gap:6px;font-style:italic;}
+.card-comp::before{content:'◆';font-size:8px;color:var(--magenta-dim);font-style:normal;}
+.card-act{font-size:11px;color:var(--text-dim);line-height:1.6;}
+
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.tag{font-size:9px;padding:2px 8px;border-radius:3px;border:1px solid;letter-spacing:0.3px;}
+.tag-magenta{background:rgba(233,30,140,0.06);color:var(--magenta);border-color:rgba(233,30,140,0.25);}
+.tag-cyan{background:rgba(0,200,224,0.06);color:var(--cyan);border-color:rgba(0,200,224,0.2);}
+.tag-yellow{background:rgba(255,224,51,0.06);color:var(--yellow);border-color:rgba(255,224,51,0.2);}
+.tag-green{background:rgba(0,230,118,0.06);color:var(--green);border-color:rgba(0,230,118,0.2);}
+
+.done-badge{
+  display:inline-flex;align-items:center;gap:5px;margin-top:10px;
+  background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);
+  color:var(--green);font-family:var(--head);font-size:10px;
+  padding:3px 10px;border-radius:3px;letter-spacing:0.5px;
+}
+
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem;}
+.stat-card{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:14px;text-align:center;}
+.stat-num{font-family:var(--head);font-size:32px;font-weight:700;line-height:1;}
+.stat-num.m{color:var(--magenta);text-shadow:0 0 10px rgba(233,30,140,0.3);}
+.stat-num.g{color:var(--green);}
+.stat-num.y{color:var(--yellow);}
+.stat-num.c{color:var(--cyan);}
+.stat-label{font-size:10px;color:var(--text-dim);margin-top:6px;text-transform:uppercase;letter-spacing:0.5px;}
+
+.resumen-table{background:var(--bg1);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.resumen-table-header{
+  display:grid;grid-template-columns:60px 1fr 110px;
+  padding:8px 14px;background:var(--bg2);border-bottom:1px solid var(--border);
+  font-family:var(--head);font-size:10px;color:var(--text-dim);
+  text-transform:uppercase;letter-spacing:0.5px;
+}
+.resumen-row{
+  display:grid;grid-template-columns:60px 1fr 110px;
+  padding:9px 14px;border-bottom:1px solid var(--border);
+  align-items:center;transition:background 0.15s;
+}
+.resumen-row:last-child{border-bottom:none;}
+.resumen-row:hover{background:var(--bg2);}
+.sem-num{font-family:var(--head);font-size:10px;color:var(--text-dim);}
+.sem-titulo{font-size:12px;color:var(--text);padding-right:10px;}
+
+.status-pill{font-family:var(--head);font-size:9px;padding:3px 8px;border-radius:3px;border:1px solid;text-align:center;width:fit-content;letter-spacing:0.5px;}
+.status-pill.done{background:rgba(0,230,118,0.08);color:var(--green);border-color:rgba(0,230,118,0.3);}
+.status-pill.pending{background:rgba(80,60,100,0.1);color:var(--text-dim);border-color:var(--border);}
+.status-pill.proyecto{background:rgba(255,224,51,0.08);color:var(--yellow);border-color:rgba(255,224,51,0.3);}
+
+/* ===== COMPETENCIAS ===== */
+.comp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;}
+.comp-card{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:14px;}
+.comp-name{font-size:13px;font-weight:600;color:var(--magenta);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.comp-name::before{content:'▶';font-size:8px;color:var(--magenta-dim);}
+.comp-sems{font-family:var(--head);font-size:10px;color:var(--text-dim);}
+.comp-sems span{color:var(--magenta);}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--border);padding:1rem 0;text-align:center;font-family:var(--head);font-size:10px;color:var(--text-dim);letter-spacing:1px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  .header-badge{display:none;}
+  .semanas-grid{grid-template-columns:1fr;}
+  .comp-grid{grid-template-columns:1fr;}
+  .resumen-table-header,.resumen-row{grid-template-columns:50px 1fr 85px;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .tab{padding:10px 12px;font-size:11px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-icon">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Playera/camiseta icon -->
+        <path d="M4 8 L10 5 L12 9 C12 9 14 11 16 11 C18 11 20 9 20 9 L22 5 L28 8 L25 14 L22 13 L22 27 L10 27 L10 13 L7 14 Z" stroke="#e91e8c" stroke-width="1.5" fill="rgba(233,30,140,0.1)"/>
+        <line x1="10" y1="18" x2="22" y2="18" stroke="#ffe033" stroke-width="0.8" stroke-dasharray="2 1"/>
+        <line x1="10" y1="21" x2="22" y2="21" stroke="#ffe033" stroke-width="0.8" stroke-dasharray="2 1"/>
+        <line x1="10" y1="24" x2="22" y2="24" stroke="#ffe033" stroke-width="0.8" stroke-dasharray="2 1"/>
+        <circle cx="16" cy="15" r="2.5" fill="rgba(0,200,224,0.3)" stroke="#00c8e0" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>INNOVACIÓN EDUCATIVA · SUBLIMACIÓN</h1>
+      <p>Pedagogía · 9no Cuatrimestre · Sabatino · Sep–Dic 2025</p>
+    </div>
+    <div class="header-badge">DOCENTE: ÁNGEL</div>
+  </div>
+</header>
+
+<div class="cmyk-strip">
+  <span class="cmyk-c"></span><span class="cmyk-m"></span>
+  <span class="cmyk-y"></span><span class="cmyk-k"></span>
+</div>
+
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-item"><div class="info-label">Institución</div><div class="info-val">Col. Univ. de Yahualica</div></div>
+    <div class="info-item"><div class="info-label">Modalidad</div><div class="info-val">Sabatina</div></div>
+    <div class="info-item"><div class="info-label">Técnicas</div><div class="info-val">Sublimación · Vinil · Transfer</div></div>
+    <div class="info-item"><div class="info-label">Periodo</div><div class="info-val">Septiembre — Diciembre 2025</div></div>
+  </div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-inner">
+    <div class="progress-top">
+      <span class="progress-label">TRANSFERENCIA DE CALOR ▸</span>
+      <span class="progress-nums" id="prog-nums">cargando...</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs-inner">
+    <div class="tabs">
+      <button class="tab active" onclick="showView('semanas',this)">CLASES</button>
+      <button class="tab" onclick="showView('resumen',this)">RESUMEN</button>
+      <button class="tab" onclick="showView('competencias',this)">COMPETENCIAS</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EDITA SOLO ESTE NÚMERO (clases completadas 0-6) ===== -->
+<script>const COMPLETADAS = 1;</script>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 1rem;">
+<div class="content">
+
+<div id="view-semanas" class="view active">
+  <div class="semanas-grid" id="semanas-grid"></div>
+</div>
+
+<div id="view-resumen" class="view">
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="resumen-table">
+    <div class="resumen-table-header">
+      <span>Clase</span><span>Tema</span><span>Estado</span>
+    </div>
+    <div id="resumen-rows"></div>
+  </div>
+</div>
+
+<div id="view-competencias" class="view">
+  <div class="comp-grid" id="comp-grid"></div>
+</div>
+
+</div>
+</div>
+
+<footer>
+  <div style="max-width:1100px;margin:0 auto;padding:0 1rem;">
+    INNOVACIÓN EDUCATIVA · SUBLIMACIÓN · PEDAGOGÍA · COL. UNIV. DE YAHUALICA · 2025
+  </div>
+</footer>
+
+<script>
+const CLASES = [
+  {n:1,t:'Bienvenida e introducción a la sublimación',c:'Comunicación y trabajo en equipo',a:'Dinámica de presentación grupal. Exposición del programa y contrato grupal. Kahoot: ¿qué sé sobre sublimación? Demostración en video del proceso básico.',tags:[{l:'bienvenida',s:'green'},{l:'kahoot',s:'yellow'},{l:'video',s:'cyan'}],tipo:'normal'},
+  {n:2,t:'Sublimación en tela: fundamentos y práctica',c:'Aprendizaje práctico',a:'Explicación del proceso: tinta, papel transfer y tela poliéster. Práctica guiada: sublimación de diseño en tela. Identificación de errores comunes. Bitácora de resultados.',tags:[{l:'tela',s:'magenta'},{l:'transfer',s:'magenta'},{l:'práctica',s:'cyan'}],tipo:'normal'},
+  {n:3,t:'Sublimación en playera: diseño y elaboración',c:'Creatividad e innovación',a:'Diseño del arte en computadora (Canva). Impresión en papel transfer. Práctica: sublimación en playera de poliéster. Evaluación del resultado con rúbrica entre pares.',tags:[{l:'playera',s:'magenta'},{l:'canva',s:'cyan'},{l:'diseño',s:'yellow'}],tipo:'normal'},
+  {n:4,t:'Sublimación en taza y termo',c:'Resolución de problemas',a:'Diferencias entre sublimar en taza y termo (recubrimiento, temperatura, tiempo). Práctica: sublimación en taza con diseño personalizado. Práctica: sublimación en termo. Comparación de resultados.',tags:[{l:'taza',s:'magenta'},{l:'termo',s:'magenta'},{l:'temperatura',s:'yellow'}],tipo:'normal'},
+  {n:5,t:'Recorte de vinil: fundamentos y práctica',c:'Uso de tecnología',a:'Introducción al plotter de corte y tipos de vinil. Diseño de arte vectorial. Práctica: corte, desprendido (weeding) y aplicación de vinil en superficie. Evaluación del resultado.',tags:[{l:'vinil',s:'cyan'},{l:'plotter',s:'cyan'},{l:'weeding',s:'yellow'}],tipo:'normal'},
+  {n:6,t:'Recorte de vinil',c:'Pensamiento creativo',a:'Práctica de recorte de vinil con diseño propio más complejo.',tags:[{l:'vinil',s:'cyan', tipo:'normal'}
+  {n:7,t:'Recorte de vinil',c:'Pensamiento creativo',a:'Continuación del recorte de vinil con diseños más elaborados: multicapa y multicolor. Práctica de desprendido fino (weeding) en diseños complejos. Aplicación del vinil en diferentes superficies. Corrección de errores y técnicas para mejorar el acabado final.',tags:[{l:'vinil',s:'cyan'},{l:'multicapa',s:'cyan'},{l:'weeding',s:'yellow'}],tipo:'normal'},
+];
+
+const normales = CLASES.filter(s=>s.tipo!=='proyecto');
+const total = CLASES.length;
+
+function isDone(n){
+  const idx = normales.findIndex(s=>s.n===n);
+  if(idx!==-1) return idx < COMPLETADAS;
+  // proyecto done if all normal done
+  return COMPLETADAS >= normales.length;
+}
+
+function pct(){return Math.round(Math.min(COMPLETADAS,total)/total*100);}
+
+function renderSemanas(){
+  const g=document.getElementById('semanas-grid');g.innerHTML='';
+  CLASES.forEach(s=>{
+    const done=isDone(s.n);
+    const d=document.createElement('div');
+    d.className='semana-card '+(s.tipo==='proyecto'?'proyecto':done?'done':'pending');
+    const tags=s.tags.map(t=>`<span class="tag tag-${t.s}">${t.l}</span>`).join('');
+    d.innerHTML=`
+      <div class="card-accent"></div>
+      <div class="card-header">
+        <div class="card-num">${s.n}</div>
+        <div class="card-title">${s.t}</div>
+        <div class="status-dot"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-comp">${s.c}</div>
+        <div class="card-act">${s.a}</div>
+        <div class="card-tags">${tags}</div>
+        ${done?'<div class="done-badge">✓ COMPLETADA</div>':''}
+      </div>`;
+    g.appendChild(d);
+  });
+}
+
+function renderResumen(){
+  const p=pct();
+  const comp=Math.min(COMPLETADAS,total);
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-card"><div class="stat-num m">${total}</div><div class="stat-label">Clases totales</div></div>
+    <div class="stat-card"><div class="stat-num g">${comp}</div><div class="stat-label">Completadas</div></div>
+    <div class="stat-card"><div class="stat-num y">${total-comp}</div><div class="stat-label">Pendientes</div></div>
+    <div class="stat-card"><div class="stat-num c">${p}%</div><div class="stat-label">Avance</div></div>
+  `;
+  document.getElementById('resumen-rows').innerHTML=CLASES.map(s=>{
+    const done=isDone(s.n);
+    const pill=s.tipo==='proyecto'
+      ?'<span class="status-pill proyecto">PROYECTO</span>'
+      :done?'<span class="status-pill done">COMPLETADA</span>'
+      :'<span class="status-pill pending">PENDIENTE</span>';
+    return `<div class="resumen-row"><span class="sem-num">CLASE ${s.n}</span><span class="sem-titulo">${s.t}</span>${pill}</div>`;
+  }).join('');
+}
+
+function renderComp(){
+  const map={};
+  CLASES.forEach(s=>{if(!map[s.c])map[s.c]=[];map[s.c].push(s.n);});
+  document.getElementById('comp-grid').innerHTML=Object.entries(map).map(([c,ns])=>
+    `<div class="comp-card"><div class="comp-name">${c}</div><div class="comp-sems">Clase${ns.length>1?'s':''}: <span>${ns.join(', ')}</span></div></div>`
+  ).join('');
+}
+
+function updateProgress(){
+  const p=pct();
+  const comp=Math.min(COMPLETADAS,total);
+  document.getElementById('prog-fill').style.width=p+'%';
+  document.getElementById('prog-nums').textContent=p+'% — '+comp+' / '+total+' clases';
+}
+
+function showView(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('view-'+name).classList.add('active');
+}
+
+renderSemanas();renderResumen();renderComp();updateProgress();
+</script>
+</body>
+</html>
