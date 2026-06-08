@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro para el Sorteo de Dibujos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f0c1b 0%, #201335 50%, #0b0214 100%);
+            --anime-pink: #ff2a85;
+            --anime-cyan: #00f3ff;
+            --anime-purple: #9d4edd;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before, body::after {
+            content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; filter: blur(120px); z-index: 0; opacity: 0.4;
+        }
+        body::before { top: 10%; left: 10%; background: var(--anime-pink); }
+        body::after { bottom: 10%; right: 10%; background: var(--anime-cyan); }
+
+        .card {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .logo-placeholder {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: linear-gradient(45deg, #1b1b2f, #393e46);
+            border: 3px solid var(--anime-pink);
+            box-shadow: 0 0 15px var(--anime-pink);
+            display: flex; justify-content: center; align-items: center; overflow: hidden;
+        }
+
+        .logo-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+        h1 {
+            font-family: 'Comfortaa', cursive; font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 42, 133, 0.6);
+        }
+
+        .welcome-phrase { font-size: 0.95rem; color: #b3b3cc; margin-bottom: 2rem; }
+        .welcome-phrase span { color: var(--anime-cyan); font-weight: 600; }
+
+        .input-group { margin-bottom: 1.5rem; text-align: left; }
+        label { display: block; font-size: 0.85rem; color: var(--anime-cyan); margin-bottom: 0.5rem; font-weight: 600; text-transform: uppercase; }
+
+        input[type="text"] {
+            width: 100%; padding: 12px 20px; background: rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem;
+        }
+        input[type="text"]:focus { outline: none; border-color: var(--anime-cyan); box-shadow: 0 0 15px rgba(0, 243, 255, 0.4); }
+
+        .btn-submit {
+            width: 100%; padding: 14px; background: linear-gradient(45deg, var(--anime-pink), var(--anime-purple));
+            border: none; border-radius: 12px; color: white; font-size: 1rem; font-weight: 800; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 42, 133, 0.4); transition: all 0.2s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 42, 133, 0.7); }
+        .btn-submit:disabled { background: #444; color: #888; box-shadow: none; cursor: not-allowed; }
+
+        .message { margin-top: 1rem; font-size: 0.95rem; display: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="logo-container">
+            <div class="logo-placeholder">
+                <img src="tu-logotipo.png" alt="Logotipo" onerror="this.style.display='none'; this.parentNode.innerHTML='🎨 LOGO';">
+            </div>
+        </div>
+
+        <h1>¡Bienvenidos!</h1>
+        <p class="welcome-phrase">Regístrate para participar en el <span>Sorteo de Dibujos gratis</span>. ¡Mucha suerte!</p>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="username">Nombre de Usuario</label>
+                <input type="text" id="username" name="username" placeholder="Ej: @tu_usuario_art" required autocomplete="off">
+            </div>
+            <button type="submit" id="submitBtn" class="btn-submit">Registrarme ✨</button>
+        </form>
+
+        <div id="responseMessage" class="message"></div>
+    </div>
+
+    <script>
+        // REEMPLAZA ESTO: Pon aquí tu nueva URL de implementación de Google Apps Script
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxIPYoCrEitc76b63KrkKfce3gEWXulaDFNnNYVwtHltqpgJBT1N88rie-3oM5JrROM/exec";
+
+        const form = document.getElementById('registerForm');
+        const usernameInput = document.getElementById('username');
+        const responseMessage = document.getElementById('responseMessage');
+        const submitBtn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Verificando... 🚀";
+
+            // Convertimos los datos a formato URL para el envío seguro y lectura de respuesta
+            const formData = new FormData(form);
+            const searchParams = new URLSearchParams(formData);
+
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: searchParams
+            })
+            .then(response => response.json()) // Escuchamos la respuesta en formato JSON
+            .then(data => {
+                if (data.status === "duplicate") {
+                    // Si el servidor detecta que ya existe
+                    responseMessage.style.color = "var(--anime-pink)";
+                    responseMessage.innerHTML = "❌ ¡Este usuario ya está registrado en el sorteo!";
+                } else if (data.status === "success") {
+                    // Si el registro fue exitoso
+                    responseMessage.style.color = "var(--anime-cyan)";
+                    responseMessage.innerHTML = "¡Registrado con éxito! Prepárate para la ruleta. 🌸";
+                    usernameInput.value = ''; // Limpiamos el campo solo si tuvo éxito
+                }
+                
+                responseMessage.style.display = 'block';
+                submitBtn.textContent = "Registrarme ✨";
+                submitBtn.disabled = false;
+
+                // Ocultar la alerta después de 4 segundos
+                setTimeout(() => { responseMessage.style.display = 'none'; }, 4000);
+            })
+            .catch(error => {
+                responseMessage.style.color = "#ff4444";
+                responseMessage.innerHTML = "Hubo un problema de conexión. Inténtalo de nuevo.";
+                responseMessage.style.display = 'block';
+                submitBtn.textContent = "Registrarme ✨";
+                submitBtn.disabled = false;
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
